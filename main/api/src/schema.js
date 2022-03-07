@@ -32,7 +32,7 @@ module.exports = gql`
     username: String!
     email: String!
     avatar: String
-    quoteBooks: [Quote!]!
+    quoteBooks: [QuoteBook!]!
     quotes: [Quote!]!
     favorites: [Quote!]!
     defaultQuoteBook: QuoteBook!
