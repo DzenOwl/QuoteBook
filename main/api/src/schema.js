@@ -35,7 +35,20 @@ module.exports = gql`
     quoteBooks: [QuoteBook!]!
     quotes: [Quote!]!
     favorites: [Quote!]!
+    favoriteQuoteBooks: [QuoteBook!]!
     defaultQuoteBook: QuoteBook!
+  }
+
+  type QuoteFeed {
+    quotes: [Quote]!
+    cursor: String!
+    hasNextPage: Boolean!
+  }
+
+  type QuoteBookFeed {
+    quoteBooks: [QuoteBook]!
+    cursor: String!
+    hasNextPage: Boolean!
   }
 
   type Query {
@@ -46,6 +59,8 @@ module.exports = gql`
     me: User!
     quoteBooks: [QuoteBook!]!
     quoteBook(id: ID, title: String): QuoteBook!
+    quoteFeed(cursor: String): QuoteFeed
+    quoteBookFeed(cursor: String): QuoteBookFeed
   }
 
   type Mutation {
@@ -54,10 +69,11 @@ module.exports = gql`
     deleteQuote(id: ID!): Boolean!
 
     newQuoteBook(title: String!, comment: String): QuoteBook
-    updateQuoteBook(id: ID!, comment: String!): Quote!
+    updateQuoteBook(id: ID!, title: String!, comment: String): QuoteBook!
     deleteQuoteBook(id: ID!): Boolean!
 
     toggleFavorite(id: ID!): Quote!
+    toggleFavoriteQuoteBook(id: ID!):QuoteBook!
     signUp(username: String!, email: String!, password: String!): String!
     signIn(username: String, email: String, password: String!): String!
   }

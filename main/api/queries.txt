@@ -1,0 +1,169 @@
+# Write your query or mutation here
+
+query QuoteBookFeed($cursor: String) {
+  quoteBookFeed(cursor: $cursor) {
+    cursor
+    hasNextPage
+    quoteBooks {
+      id
+      title
+      comment
+      createdAt
+      favoriteCount
+      author {
+        username
+        id
+      }
+    }
+  }
+}
+
+query quoteBook($id: ID!) {
+  quoteBook(id: $id) {
+    id
+    createdAt
+    comment
+    favoriteCount
+    author {
+      username
+      # id
+      # avatar
+    }
+  }
+}
+
+query QuoteBooks {
+  quoteBooks {
+    id
+    title
+    comment
+    favoriteCount
+    favoritedBy {
+      username
+    }
+    quotes {
+      content
+    }
+    author {
+      id
+      username
+    }
+  }
+}
+
+mutation updateQuoteBook {
+  updateQuoteBook(
+    id: "6225859f77c7e4064c68bf41"
+    title: "Default"
+    comment: "Default quote book of user"
+  ) {
+    id
+    title
+    comment
+  }
+}
+
+mutation SignUp {
+  signUp(username: "user", email: "mail@mail.ru", password: "password")
+}
+
+mutation SignIn {
+  signIn(username: "user", password: "password")
+}
+
+query Users {
+  users {
+    username
+    favoriteQuoteBooks {
+      title
+    }
+  }
+}
+
+query Me {
+  me {
+    id
+    username
+    favoriteQuoteBooks {
+      id
+      title
+      createdAt
+      comment
+      favoriteCount
+      author {
+        username
+        id
+        avatar
+      }
+    }
+  }
+}
+
+mutation ToggleFavoriteQB {
+  toggleFavoriteQuoteBook(id: "622dc4cb449e4540b8b45da6") {
+    title
+    favoriteCount
+    favoritedBy {
+      username
+    }
+  }
+}
+
+mutation NewQuoteBook {
+  newQuoteBook(title: "New 1", comment: "Comment 1") {
+    title
+    comment
+    favoriteCount
+    favoritedBy {
+      username
+    }
+    author {
+      username
+    }
+  }
+}
+
+mutation NewQuote {
+  newQuote (
+    content: "New 3", 
+    # quoteBook: "622dc4cb449e4540b8b45da6"
+  ) {
+    content
+    quoteBook {
+      title
+    }
+    author {
+      username
+    }
+  }
+}
+
+mutation DeleteQuoteBook {
+  deleteQuoteBook (id: "622df0160e04174844e2899d")
+}
+
+query Quotes {
+  quotes {
+    id
+    content
+    quoteBook {
+      title
+    }
+    author {
+      username
+    }
+  }
+}
+
+query Quote {
+  quote(id: "622e0096da89856f4cec6e70") {
+    content
+    quoteBook {
+      id
+      title
+    }
+    author {
+      username
+    }
+  }
+}

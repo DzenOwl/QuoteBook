@@ -6,5 +6,8 @@ module.exports = {
   // Resolved the favoritedBy info for a quote when requested
   favoritedBy: async (quote, args, { models }) => {
     return await models.User.find({ _id: { $in: quote.favoritedBy } });
-  }
+  },
+  quoteBook: async (quote, args, { models }) => {
+    return await models.QuoteBook.findById(quote.quoteBook);
+  },
 };

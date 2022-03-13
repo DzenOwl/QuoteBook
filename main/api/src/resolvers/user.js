@@ -7,6 +7,9 @@ module.exports = {
   favorites: async (user, args, { models }) => {
     return await models.Quote.find({ favoritedBy: user._id }).sort({ _id: -1 });
   },
+  favoriteQuoteBooks: async (user, args, { models }) => {
+    return await models.QuoteBook.find({ favoritedBy: user._id }).sort({ _id: -1 });
+  },
   quoteBooks: async (user, args, { models }) => {
     return await models.QuoteBook.find({ author: user._id }).sort({ _id: -1 });
   },

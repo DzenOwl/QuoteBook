@@ -11,19 +11,6 @@ const gravatar = require('../util/gravatar');
 
 module.exports = {
   newQuote: async (parent, args, { models, user }) => {
-/*     if (!user) {
-      throw new AuthenticationError('You must be signed in to create a quote');
-    }
-
-    const defaultQuoteBook = (await models.User.findById(user.id).lean().exec()).defaultQuoteBook;
-    const quoteBook = args.quoteBook == undefined ? defaultQuoteBook : args.quoteBook;
-
-    return await models.Quote.create({
-      content: args.content,
-      author: mongoose.Types.ObjectId(user.id),
-      quoteBook: mongoose.Types.ObjectId(quoteBook),
-      favoriteCount: 0
-    }); */
     const defaultQuoteBook = (
       await models.User
         .findById(user.id)
@@ -31,10 +18,11 @@ module.exports = {
         .exec()
       ).defaultQuoteBook;
     
+
     const quoteBook = args.quoteBook == undefined ? defaultQuoteBook : args.quoteBook;
     
-    console.log(`Args quote book: ${args.quoteBook}`)
-    console.log(`User quote book: ${defaultQuoteBook}`)
+/*     console.log(`Args quote book: ${args.quoteBook}`)
+    console.log(`User quote book: ${defaultQuoteBook}`) */
     
     const quote = await models.Quote.create({
       content: args.content,
@@ -144,7 +132,7 @@ module.exports = {
   },
   newQuoteBook: async (parent, args, { models, user }) => {
     if (!user) {
-      throw new AuthenticationError('You must be signed in to create a quoteeBook');
+      throw new AuthenticationError('You must be signed in to create a quoteBook');
     }
 
     console.log(args);
@@ -159,24 +147,31 @@ module.exports = {
   updateQuoteBook: async (parent, { title, comment, id }, { models, user }) => {
     // if not a user, throw an Authentication Error
     if (!user) {
-      throw new AuthenticationError('You must be signed in to update a quoteeBook');
+      throw new AuthenticationError('You must be signed in to update a quoteBook');
     }
 
     // find the quoteBook
     const quoteBook = await models.QuoteBook.findById(id);
-    // if the quoteeBook owner and current user don't match, throw a forbidden error
+    // if the quoteBook owner and current user don't match, throw a forbidden error
     if (quoteBook && String(quoteBook.author) !== user.id) {
-      throw new ForbiddenError("You don't have permissions to update the quoteeBook");
+      throw new ForbiddenError("You don't have permissions to update the quoteBook");
     }
 
-    // Update the quoteBook in the db and return the updated quoteeBook
+    if (title === "") title = undefined
+
+    const newTitle = title == undefined ? quoteBook.title : title;
+    const newComment = comment === undefined ? quoteBook.comment : comment;
+
+
+    // Update the quoteBook in the db and return the updated quoteBook
     return await models.QuoteBook.findOneAndUpdate(
       {
         _id: id
       },
       {
         $set: {
-          comment
+          title: newTitle,
+          comment: newComment
         }
       },
       {
@@ -187,23 +182,78 @@ module.exports = {
   deleteQuoteBook: async (parent, { id }, { models, user }) => {
     // if not a user, throw an Authentication Error
     if (!user) {
-      throw new AuthenticationError('You must be signed in to delete a quoteeBook');
+      throw new AuthenticationError('You must be signed in to delete a quoteBook');
     }
-
+    
     // find the quoteBook
     const quoteBook = await models.QuoteBook.findById(id);
+    const defaultId = (await models.QuoteBook.findOne({ author: user.id })).id
+    console.log(defaultId)
+    
     // if the quoteBook owner and current user don't match, throw a forbidden error
     if (quoteBook && String(quoteBook.author) !== user.id) {
-      throw new ForbiddenError("You don't have permissions to delete the quoteeBook");
+      throw new ForbiddenError("You don't have permissions to delete the quoteBook");
+    }
+
+    if (quoteBook && defaultId === id) {
+      throw new ForbiddenError("You don't have permissions to delete the defaultQuoteBook");
     }
 
     try {
+      await models.Quote.deleteMany({ quoteBook: id })
       // if everything checks out, remove the quoteBook
       await quoteBook.remove();
       return true;
     } catch (err) {
       // if there's an error along the way, return false
       return false;
+    }
+  },
+  toggleFavoriteQuoteBook: async (parent, { id }, { models, user }) => {
+    // if no user context is passed, throw auth error
+    if (!user) {
+      throw new AuthenticationError();
+    }
+
+    // check to see if the user has already favorited the QuoteBook
+    let quoteBookCheck = await models.QuoteBook.findById(id);
+    const hasUser = quoteBookCheck.favoritedBy.indexOf(user.id);
+
+    // if the user exists in the list
+    // pull them from the list and reduce the favoriteCount by 1
+    if (hasUser >= 0) {
+      return await models.QuoteBook.findByIdAndUpdate(
+        id,
+        {
+          $pull: {
+            favoritedBy: mongoose.Types.ObjectId(user.id)
+          },
+          $inc: {
+            favoriteCount: -1
+          }
+        },
+        {
+          // Set new to true to return the updated doc
+          new: true
+        }
+      );
+    } else {
+      // if the user doesn't exists in the list
+      // add them to the list and increment the favoriteCount by 1
+      return await models.QuoteBook.findByIdAndUpdate(
+        id,
+        {
+          $push: {
+            favoritedBy: mongoose.Types.ObjectId(user.id)
+          },
+          $inc: {
+            favoriteCount: 1
+          }
+        },
+        {
+          new: true
+        }
+      );
     }
   },
   signUp: async (parent, { username, email, password }, { models, user }) => {
