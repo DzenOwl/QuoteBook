@@ -19,7 +19,7 @@ const QuoteBookFeed = ({ quoteBooks }) => {
         <QuoteBookWrapper key={quoteBook.id}>
           <QuoteBook quoteBook={quoteBook} />
           <Link to={`/quoteBook/${quoteBook.id}`}>Permalink</Link> <br />
-          <Link to={`/quoteBook/${quoteBook.id}/quotes`}>Quotes</Link>
+          {/* <Link to={`/quoteBook/${quoteBook.id}/quotes`}>Quotes</Link> */}
         </QuoteBookWrapper>
       ))}
     </div>

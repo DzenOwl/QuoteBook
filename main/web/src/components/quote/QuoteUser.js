@@ -6,6 +6,8 @@ import DeleteQuote from './DeleteQuote';
 import FavoriteQuote from './FavoriteQuote';
 import { GET_ME } from '../../gql/query';
 
+//TODO: <Link to={`/movequote/${props.quote.id}`}>Move</Link> <br />
+
 const QuoteUser = props => {
   const { loading, error, data } = useQuery(GET_ME);
   // if the data is loading, display a loading message
@@ -24,7 +26,7 @@ const QuoteUser = props => {
       {data.me.id === props.quote.author.id && (
         <React.Fragment>
           <Link to={`/editquote/${props.quote.id}`}>Edit</Link> <br />
-          {/* <DeleteQuote quoteId={props.quote.id} /> */}
+          <DeleteQuote quoteId={props.quote.id} />
         </React.Fragment>
       )}
     </React.Fragment>

@@ -51,9 +51,9 @@ const Quote = ({ quote }) => {
         <MetaInfo>
           <em>by</em> {quote.author.username} <br />
           {format(quote.createdAt, 'MMM Do YYYY')}  <br />
-          {/* quote.quoteBook.id */}
+          <em>from</em> "{quote.quoteBook.title}"
         </MetaInfo>
-{/*          {data.isLoggedIn ? (
+          {data.isLoggedIn ? (
           <UserActions>
             <QuoteUser quote={quote} />
           </UserActions>
@@ -61,7 +61,7 @@ const Quote = ({ quote }) => {
           <UserActions>
             <em>Favorites:</em> {quote.favoriteCount}
           </UserActions>
-        )} */}
+        )}
       </MetaData>
       <ReactMarkdown source={quote.content} />
     </StyledQuote>

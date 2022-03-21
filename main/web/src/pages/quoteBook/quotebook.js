@@ -3,9 +3,9 @@ import React, { useEffect } from 'react';
 import { useQuery, gql } from '@apollo/client';
 
 // import the QuoteBook component
-import QuoteBook from '../components/quoteBook/QuoteBook';
-import { GET_QUOTEBOOK } from '../gql/query';
-import { APP_NAME } from '../App';
+import QuoteBook from '../../components/quoteBook/QuoteBook';
+import { GET_QUOTEBOOK } from '../../gql/query';
+import { APP_NAME } from '../../App';
 
 const QuoteBookPage = props => {
   useEffect(() => {

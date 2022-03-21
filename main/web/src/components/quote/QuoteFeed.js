@@ -13,7 +13,8 @@ const QuoteWrapper = styled.div`
 import Quote from './Quote';
 
 const QuoteFeed = ({ quotes }) => {
-  //quotes.map(quote => (console.log(quote.quoteBook.id)))
+  //console.log(quotes)
+  //quotes.map(quote => (console.log(quote.id)))
   
   return (
     <div>

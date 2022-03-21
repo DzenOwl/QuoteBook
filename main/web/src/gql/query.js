@@ -84,7 +84,7 @@ const GET_ME = gql`
   query me {
     me {
       id
-      favorites {
+      favoriteQuotes {
         id
       }
       favoriteQuoteBooks {
@@ -156,6 +156,7 @@ const GET_QUOTEBOOK_QUOTES = gql`
           avatar
         }
         quoteBook {
+          title
           id
         }
       }
@@ -163,12 +164,12 @@ const GET_QUOTEBOOK_QUOTES = gql`
   }
 `;
 
-const GET_MY_FAVORITES = gql`
+const GET_MY_FAVORITE_QUOTES = gql`
   query me {
     me {
       id
       username
-      favorites {
+      favoriteQuotes {
         id
         createdAt
         content
@@ -177,6 +178,10 @@ const GET_MY_FAVORITES = gql`
           username
           id
           avatar
+        }
+        quoteBook {
+          id
+          title
         }
       }
     }
@@ -197,7 +202,7 @@ export {
   GET_QUOTES,
   GET_QUOTE,
   GET_QUOTEBOOK_QUOTES,
-  GET_MY_FAVORITES,
+  GET_MY_FAVORITE_QUOTES,
   GET_ME,
   IS_LOGGED_IN
 };

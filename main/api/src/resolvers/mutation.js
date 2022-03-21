@@ -83,6 +83,39 @@ module.exports = {
         throw new Error('Error updating quote');
       }
   },
+  moveQuote: async (parent, { quoteId, newQuoteBookId }, { models, user }) => {
+    if (!user) {
+      throw new AuthenticationError('You must be signed in to move a quote');
+    }
+
+    const quote = await models.Quote.findById(quoteId);
+    // if the quote owner and current user don't match, throw a forbidden error
+    if (quote && String(quote.author) !== user.id) {
+      throw new ForbiddenError("You don't have permissions to delete the quote");
+    }
+
+    const quoteBookById = await models.QuoteBook.findById(newQuoteBookId);
+    const newQuoteBook = quoteBookById == undefined ? quote.quoteBook : quoteBookById;
+
+    try {
+      // Update the quote in the db and return the updated quote
+      return await models.Quote.findOneAndUpdate(
+        {
+          _id: quoteId
+        },
+        {
+          $set: {
+            quoteBook: newQuoteBook
+          }
+        },
+        {
+          new: true
+        }
+      );
+      } catch (err) {
+        throw new Error('Error moving quote');
+      }
+  },
   toggleFavorite: async (parent, { id }, { models, user }) => {
     // if no user context is passed, throw auth error
     if (!user) {

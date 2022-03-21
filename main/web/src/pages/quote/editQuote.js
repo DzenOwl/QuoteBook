@@ -2,9 +2,9 @@ import React from 'react';
 import { useMutation, useQuery } from '@apollo/client';
 
 // import the quoteForm component
-import QuoteForm from '../components/quote/QuoteForm';
-import { GET_QUOTE, GET_ME } from '../gql/query';
-import { EDIT_QUOTE } from '../gql/mutation';
+import QuoteForm from '../../components/quote/QuoteForm';
+import { GET_QUOTE, GET_ME } from '../../gql/query';
+import { EDIT_QUOTE } from '../../gql/mutation';
 
 const EditQuote = props => {
   // store the id found in the url as a variable
@@ -19,7 +19,7 @@ const EditQuote = props => {
       id
     },
     onCompleted: () => {
-      props.history.push(`/quote/${id}`);
+      props.history.push(`/quoteBook/${data.quote.quoteBook.id}/quote/${id}`);
     }
   });
 

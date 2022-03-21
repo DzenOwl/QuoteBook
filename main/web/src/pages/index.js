@@ -12,14 +12,17 @@ import Home from './home.js';
 import SignUp from './signup.js';
 import SignIn from './signin.js';
 
-import MyQuoteBooks from './myquotebooks.js';
-import Favorites from './favorites.js';
-import QuoteBookPage from './quotebook.js';
-import NewQuoteBook from './newQuoteBook';
-import EditQuoteBook from './editQuoteBook';
+import MyQuoteBooks from './quoteBook/myquotebooks.js';
+import FavoriteQuoteBooks from './quoteBook/favoriteQuoteBooks.js';
+import QuoteBookPage from './quoteBook/quotebook.js';
+import NewQuoteBook from './quoteBook/newQuoteBook.js';
+import EditQuoteBook from './quoteBook/editQuoteBook.js';
 
-import QuotePage from './quote.js';
-import QuotesInQuoteBook from './quotesInQuoteBook';
+import QuotePage from './quote/quote.js';
+import QuotesInQuoteBook from './quote/quotesInQuoteBook';
+import NewQuote from './quote/newQuote';
+import FavoriteQuotes from './quote/favoriteQuotes.js';
+import EditQuote from './quote/editQuote';
 
 const IS_LOGGED_IN = gql`
   {
@@ -34,15 +37,18 @@ const Pages = props => {
       <Layout>
           <Route exact path="/" component={Home} />
           <PrivateRoute path="/myqbs" component={MyQuoteBooks} />
-          <PrivateRoute path="/favorites" component={Favorites} />
+          <PrivateRoute path="/favoriteqbs" component={FavoriteQuoteBooks} />
+          <PrivateRoute path="/favoritequotes" component={FavoriteQuotes} />
           <Route path="/quoteBook/:id" component={QuoteBookPage} />
           <Route path="/signup" component={SignUp} />
           <Route path="/signin" component={SignIn} />
           <PrivateRoute path="/newqb" component={NewQuoteBook} />
           <PrivateRoute path="/editqb/:id" component={EditQuoteBook} />
+          <PrivateRoute path="/editquote/:id" component={EditQuote} />
           <PrivateRoute path="/quoteBook/:id/quotes" component={QuotesInQuoteBook} />
           <PrivateRoute path="/quoteBook/:quoteBookId/quote/:quoteId" component={QuotePage} />
-          <PrivateRoute path="/editquote/:id" component={EditQuoteBook} />
+          <PrivateRoute path="/quoteBook/:id/newquote" component={NewQuote} />
+
       </Layout>
     </Router>
   );

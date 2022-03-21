@@ -56,8 +56,8 @@ const TOGGLE_FAVORITE = gql`
 `;
 
 const NEW_QUOTE = gql`
-  mutation newQuoteBook($content: String!, $quoteBook: ID) {
-    newQuoteBook(content: $content, quoteBook: $quoteBook) {
+  mutation newQuote($content: String!, $quoteBook: ID) {
+    newQuote(content: $content, quoteBook: $quoteBook) {
       id
       content
       createdAt
@@ -79,7 +79,7 @@ const NEW_QUOTE = gql`
 `;
 
 const EDIT_QUOTE = gql`
-  mutation updateQuote($id: ID!, $content: String) {
+  mutation updateQuote($id: ID!, $content: String!) {
     updateQuote(id: $id, content: $content) {
       id
       content

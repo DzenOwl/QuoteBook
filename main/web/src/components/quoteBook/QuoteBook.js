@@ -3,13 +3,14 @@ import ReactMarkdown from 'react-markdown';
 import { format } from 'date-fns';
 import styled from 'styled-components';
 import { useQuery } from '@apollo/client';
+import { Link } from 'react-router-dom';
 
 import QuoteBookUser from './QuoteBookUser';
 import { IS_LOGGED_IN } from '../../gql/query';
 // Keep QuoteBooks from extending wider than 800px
 const StyledQuoteBook = styled.article`
   max-width: 800px;
-  margin: 0 auto;
+  margin: 1em auto;
 `;
 
 // Style the QuoteBook meta data
@@ -51,7 +52,8 @@ const QuoteBook = ({ quoteBook }) => {
           <b>{quoteBook.title}</b> <br />
           {quoteBook.comment} <br />
           <em>by</em> {quoteBook.author.username} <br />
-          {format(quoteBook.createdAt, 'MMM Do YYYY')}
+          {format(quoteBook.createdAt, 'MMM Do YYYY')} <br />
+          <Link to={`/quoteBook/${quoteBook.id}/quotes`}>Quotes</Link>
         </MetaInfo>
         {data.isLoggedIn ? (
           <UserActions>

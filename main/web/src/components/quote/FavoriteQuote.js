@@ -1,9 +1,9 @@
-/* import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 
 import ButtonAsLink from '../ButtonAsLink'
-import { TOGGLE_FAVORITE_QUOTE } from '../gql/mutation';
-import { GET_MY_FAVORITES } from '../gql/query';
+import { TOGGLE_FAVORITE_QUOTE } from '../../gql/mutation';
+import { GET_MY_FAVORITE_QUOTES } from '../../gql/query';
 
 const FavoriteQuote = props => {
   // store the quote's favorite count as state
@@ -11,7 +11,7 @@ const FavoriteQuote = props => {
   // store if the user has favorited the quote as state
   const [favorited, setFavorited] = useState(
     // check if the quote exists in the user favorites list
-    props.me.favorites.filter(quote => quote.id === props.quoteId).length > 0
+    props.me.favoriteQuotes.filter(quote => quote.id === props.quoteId).length > 0
   );
 
   // toggleFavorite mutation hook
@@ -19,8 +19,8 @@ const FavoriteQuote = props => {
     variables: {
       id: props.quoteId
     },
-    // refetch the GET_MY_FAVORITES query to update the cache
-    refetchQueries: [{ query: GET_MY_FAVORITES }]
+    // refetch the GET_MY_FAVORITE_QUOTES query to update the cache
+    refetchQueries: [{ query: GET_MY_FAVORITE_QUOTES }]
   });
 
   // if the user has favorited the quote display the option to remove the favorite
@@ -56,4 +56,3 @@ const FavoriteQuote = props => {
 };
 
 export default FavoriteQuote;
- */

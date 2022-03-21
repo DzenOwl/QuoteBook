@@ -11,7 +11,7 @@ const FavoriteQuoteBook = props => {
   // store if the user has favorited the quoteBook as state
   const [favorited, setFavorited] = useState(
     // check if the quoteBook exists in the user favorites list
-    props.me.favorites.filter(quoteBook => quoteBook.id === props.quoteBookId).length > 0
+    props.me.favoriteQuoteBooks.filter(quoteBook => quoteBook.id === props.quoteBookId).length > 0
   );
 
   // toggleFavorite mutation hook

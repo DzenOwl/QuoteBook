@@ -4,7 +4,7 @@ module.exports = {
     return await models.Quote.find({ quoteBook: quoteBook._id }).sort({ _id: -1 });
   },
   // Resolve the list of favorites for a user when requested
-  favorites: async (quoteBook, args, { models }) => {
+  favoriteQuotes: async (quoteBook, args, { models }) => {
     return await models.Quote.find({ favoritedBy: quoteBook._id }).sort({ _id: -1 });
   },
   author: async (quoteBook, args, { models }) => {

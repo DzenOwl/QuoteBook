@@ -29,7 +29,7 @@ const NavList = styled.ul`
   a {
     text-decoration: none;
     font-weight: bold;
-    font-size: 1.1em;
+    font-size: 1em;
     color: #333;
   }
 
@@ -64,11 +64,19 @@ const Navigation = () => {
           </Link>
         </li>
         <li>
-          <Link to="/favorites">
+          <Link to="/favoriteqbs">
             <span aria-hidden="true" role="img">
               🌟
             </span>
-            Favorites
+            Favorite QBooks
+          </Link>
+        </li>
+        <li>
+          <Link to="/favoritequotes">
+            <span aria-hidden="true" role="img">
+              ❤️
+            </span>
+            Favorite Quotes
           </Link>
         </li>
         <li>

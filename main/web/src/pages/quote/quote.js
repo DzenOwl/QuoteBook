@@ -4,8 +4,8 @@ import { useQuery, gql } from '@apollo/client';
 import { useParams } from 'react-router-dom'
 
 // import the Quote component
-import Quote from '../components/quote/Quote';
-import { GET_QUOTE } from '../gql/query';
+import Quote from '../../components/quote/Quote';
+import { GET_QUOTE } from '../../gql/query';
 
 const QuotePage = props => {
   // store the id found in the url as a variable

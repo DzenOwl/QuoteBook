@@ -24,7 +24,7 @@ module.exports = gql`
     quotes: [Quote!]!
     favoriteCount: Int!
     favoritedBy: [User!]
-    favorites: [Quote!]!
+    favoriteQuotes: [Quote!]!
   }
 
   type User {
@@ -34,7 +34,7 @@ module.exports = gql`
     avatar: String
     quoteBooks: [QuoteBook!]!
     quotes: [Quote!]!
-    favorites: [Quote!]!
+    favoriteQuotes: [Quote!]!
     favoriteQuoteBooks: [QuoteBook!]!
     defaultQuoteBook: QuoteBook!
   }
@@ -67,6 +67,7 @@ module.exports = gql`
     newQuote(content: String!, quoteBook: ID): Quote
     updateQuote(id: ID!, content: String!): Quote!
     deleteQuote(id: ID!): Boolean!
+    moveQuote(quoteId: ID!, newQuoteBookId: ID!): Quote!
 
     newQuoteBook(title: String!, comment: String): QuoteBook
     updateQuoteBook(id: ID!, title: String!, comment: String): QuoteBook!
